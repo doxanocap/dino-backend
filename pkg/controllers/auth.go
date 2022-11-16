@@ -14,6 +14,7 @@ import (
 )
 
 func SignUp(ctx *gin.Context) {
+	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
 	var data map[string]string
 	if err := ctx.BindJSON(&data); err != nil {
 		panic(err)
@@ -35,6 +36,7 @@ func SignUp(ctx *gin.Context) {
 }
 
 func SignIn(ctx *gin.Context) {
+	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
 	var data map[string]string
 
 	if err := ctx.BindJSON(&data); err != nil {
@@ -86,6 +88,7 @@ func SignIn(ctx *gin.Context) {
 }
 
 func User(ctx *gin.Context) {
+	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
 	cookie, _ := ctx.Cookie("jwt4")
 	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte("SecretKey"), nil
@@ -118,6 +121,7 @@ func User(ctx *gin.Context) {
 }
 
 func SignOut(ctx *gin.Context) {
+	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
 	cookie := &http.Cookie{
 		Name:     "jwt4",
 		Value:    "",

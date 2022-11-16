@@ -1,11 +1,10 @@
 package routes
 
 import (
-	"net/http"
-
 	"github.com/doxanocap/reactNative/dino-back/pkg/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func Router() {
@@ -13,12 +12,13 @@ func Router() {
 	api := r.Group("/api")
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"POST", "GET", "PATCH", "PUT", "DELETE"},
+		AllowMethods:     []string{"POST", "GET", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Content-Type", "Accept", "Accept-Encoding", "Authorization", "X-CSRF-Token"},
 		ExposeHeaders:    []string{"Authorization"},
 		AllowCredentials: true,
 	}))
 	api.GET("/ping", func(ctx *gin.Context) {
+		(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
 		ctx.JSON(http.StatusOK, gin.H{"message": "ping"})
 	})
 	api.POST("/signUp", controllers.SignUp)
