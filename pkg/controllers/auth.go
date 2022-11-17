@@ -26,7 +26,6 @@ func SignUp(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid input"})
 		return
 	}
-	fmt.Println(data)
 	res, err := database.DB.Query(fmt.Sprintf("INSERT INTO dinoUsers (email, username, password) VALUES('%s','%s','%s')", user.Email, user.Username, password))
 	if err != nil {
 		panic(err)
@@ -36,7 +35,9 @@ func SignUp(ctx *gin.Context) {
 }
 
 func SignIn(ctx *gin.Context) {
-	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "*")
+	(ctx.Writer).Header().Set("Access-Control-Allow-Origin", "http://localhost:19006")
+	(ctx.Writer).Header().Set("Access-Control-Allow-Credentials", "true")
+
 	var data map[string]string
 
 	if err := ctx.BindJSON(&data); err != nil {
@@ -58,7 +59,6 @@ func SignIn(ctx *gin.Context) {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": "incorrect password"})
 			return
 		}
-		break
 	}
 	if newUser.Id == 0 {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "unsuccessful"})

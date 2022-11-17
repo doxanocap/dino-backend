@@ -11,7 +11,7 @@ func Router() {
 	r := gin.Default()
 	api := r.Group("/api")
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins:     []string{"http://localhost:19006"},
 		AllowMethods:     []string{"POST", "GET", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Content-Type", "Accept", "Accept-Encoding", "Authorization", "X-CSRF-Token"},
 		ExposeHeaders:    []string{"Authorization"},
